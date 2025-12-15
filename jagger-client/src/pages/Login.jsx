@@ -16,15 +16,11 @@ export default function Login() {
     e.preventDefault();
     try {
       const res = await api.post("/auth/login", form);
-
-      // ✅ COOKIE is already set by backend
+      localStorage.setItem("token", res.data.token);
       setUser(res.data.user);
-
       navigate("/dashboard");
     } catch (err) {
-      alert(
-        err.response?.data?.message || "Invalid credentials"
-      );
+      alert("Invalid credentials" + err);
     }
   };
 
@@ -65,11 +61,13 @@ export default function Login() {
           </button>
         </form>
 
+        {/* 🔐 Info Section */}
         <div className="text-center">
           <p className="text-muted mb-2" style={{ fontSize: "13px" }}>
             Access to this system is managed by administrators.
           </p>
 
+          {/* Admin Create User */}
           <Link
             to="/register"
             className="text-decoration-none"
@@ -81,6 +79,7 @@ export default function Login() {
 
         <hr />
 
+        {/* About JAGGAER */}
         <div className="text-muted" style={{ fontSize: "12px" }}>
           <p className="mb-1">
             <strong>About JAGGAER</strong>
